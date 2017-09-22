@@ -11,7 +11,8 @@ let Store=createStore(Reducers);
 
 function mapStateToProps(state){
     return {
-        todos:state.todos
+        todos:state.todos,
+        showType:state.type
     }
 }
 function mapDispatchToProps(dispatch){
@@ -53,7 +54,7 @@ let FooterConnect=connect(
 class App extends React.Component{
     render(){
         return (
-            <div>
+            <div className="container">
                 <Provider store={Store}>
                     <div>
                         <AddTodoConnect/>
