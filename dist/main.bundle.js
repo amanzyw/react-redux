@@ -25885,6 +25885,7 @@ var _uuid2 = _interopRequireDefault(_uuid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var main = null;
 function todos() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { type: "SHOW_ALL", todos: [] };
     var action = arguments[1];
@@ -25892,7 +25893,7 @@ function todos() {
     switch (action.type) {
         case 'ADD_TODO':
             var _todos = state.todos.concat(new Object({ id: _uuid2.default.v4(), text: action.value, completed: false }));
-            return Object.assign({}, state, { todos: _todos });
+            return main = Object.assign({}, state, { todos: _todos });
         case "TOGGLE_TODO":
             _todos = state.todos.map(function (item, idx) {
                 if (item.id == action.id) {
@@ -25904,23 +25905,30 @@ function todos() {
             return Object.assign({}, state, { todos: _todos });
         case "SETVISIBI_TODO":
             if (action.showType == "SHOW_ALL") {
-                return Object.assign({}, state, { type: action.showType });
+                main["type"] = "SHOW_ALL";
+                /*return Object.assign({},state,{type:action.showType});*/
+                return Object.assign({}, main, { type: action.showType });
             }
             if (action.showType == "SHOW_ACTIVE") {
-                _todos = state.todos.filter(function (item, idx) {
+                main["type"] = "SHOW_ACTIVE";
+                /*todos=state.todos.filter((item,idx)=>{if(item.completed==false){return item}});*/
+                // return Object.assign({},state,{type:action.showType,todos:todos});
+                _todos = main.todos.filter(function (item, idx) {
                     if (item.completed == false) {
                         return item;
                     }
                 });
-                return Object.assign({}, state, { type: action.showType, todos: _todos });
+                return Object.assign({}, main, { type: action.showType, todos: _todos });
             }
             if (action.showType == "SHOW_COMPLETED") {
-                _todos = state.todos.filter(function (item, idx) {
+                main["type"] = "SHOW_COMPLETED";
+                /*todos=state.todos.filter((item,idx)=>{if(item.completed==true){return item}});*/
+                _todos = main.todos.filter(function (item, idx) {
                     if (item.completed == true) {
                         return item;
                     }
                 });
-                return Object.assign({}, state, { type: action.showType, todos: _todos });
+                return Object.assign({}, main, { type: action.showType, todos: _todos });
             }
         default:
             return state;
